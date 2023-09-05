@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-light">
+    <div class="container-fluid">
+        <%= image_tag('logo.png', alt: 'fotos', class: 'mr-2', style: 'width: 35px; height: 30px;') %>
+        <%= link_to 'up with a click', pages_inicio_path, class: 'navbar-brand' %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <%= link_to 'Ofertas', pages_terminos_path, class: 'nav-link text-white' %>
+            </li>
+        </ul>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <% if usuario_signed_in?  %>
+                        
+                Hola <%= current_usuario.role %>
+                <% else %>
+                Inicia sesion
+                <% end %>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <% if usuario_signed_in? %>
+                <li class="nav-item">
+                </li>
+                <li><%= button_to 'Cerrar sesión', destroy_usuario_session_path, class: 'dropdown-item', method: :delete %></li>
+                <% else %>
+                <li><%= link_to 'Iniciar sesión', new_usuario_session_path, class: 'dropdown-item' %></li>
+                <li><hr class="dropdown-divider"></li>
+                <% end %>
+            </ul>
+            </li>
+        </ul>
+        </div>
+    </div>
+</nav>
+
