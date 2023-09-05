@@ -12,4 +12,11 @@
 	rails db:create
 5. Instalacion de Gemas:
 	bundle add devise faker pagy 
-6. 
+6. Instalar Estructura Devise
+	rails generate devise:install
+7. Instalar customizacion de componentes Devise
+	rails g devise:views
+8. Generar usuario device:
+	rails generate devise user
+9. Crear en schema DB:
+	rails db:migrate
