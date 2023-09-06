@@ -1,0 +1,27 @@
+<%= form_with(model: type_maintenance) do |form| %>
+  <% if type_maintenance.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(type_maintenance.errors.count, "error") %> prohibited this type_maintenance from being saved:</h2>
+
+      <ul>
+        <% type_maintenance.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :maintenance_id, style: "display: block" %>
+    <%= form.text_field :maintenance_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

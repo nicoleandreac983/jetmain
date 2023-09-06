@@ -28,8 +28,8 @@
      root 'devise/sessions#new'
 13. luego de iniciar sesion se lleva a la vista de inicio se genera controlador para hacer el controlador de sesiones.
     rails generate controller CustomSessions
-14. validacion de inicio de sesion en app/models/user.rb
-
+14. se crea un seed con 2 usuarios y roles definidos para probar seed.rb.
+    
 15. Creacion navbar carpeta shared en views
 16.  Agregamos Inicio y cierre de sesión. config/initializer/devise.rb
  Debemos modificar los formatos navigacionales de devise 
@@ -61,7 +61,58 @@ y se realiza las acciones que podra realizar como admin
     authorize_request(["admin"])
   end
 
-17. agregamos seguridad a los controladores 
+agregamos seguridad a los controladores 
 before_action :authenticate_user!
 
+22. Crear Scaffolding para entidad o modelo type_engine, type_maintenance, town, materials. con sus fk a mantenimiento.
+    rails g scaffold Engine type_engine  
+    rails g scaffold Materials name 
+    rails g scaffold Type_maintenance name 
+    rails generate model Town name:string 
+
+
+23. genero una modificacion en el modelo engine en todos los atributos
+rails generate migration AddAttributesToEngine
+remove_column :engines, :type_engine
+    add_column :engines, :type_engine, :integer
+    add_column :engines, :name, :string
+    add_column :engines, :descripcion, :text
+    add_column :engines, :photo, :string
+24. agrego enum con los 2 tipos de motor en app/models/engine.rb.
+  enum type_engine: {
+    'Motor a reacción' => 0,
+    'Motor turbohélice' => 1
+  }
+25. generamos validaciones en app/models/engine.rb.
+  validates :name, presence: true, uniqueness: true, format: { with: /\A(REAC|TURBO)-\d+\z/i, message: 'debe seguir el formato REAC-n o TURBO-n' } #aca aseguro que el nombre empiece con Reac o turbo mas el signo - y un numero no importa si seescribe en mayuscula o minuscula.
+  validates :descripcion, presence: true
+  validates :type_engine, presence: true
+  validates :photo, presence: true
+26. se genera seed de ciudades y motores.
+27. se genera tabla de bootstrap para ver motores en index.html
+28. generar paginacion
+    agregar @pagy, @engines = pagy(@engines) en engine controller
+    ademas del index agregar <%= pagy_nav(@pagy) %>
+    ApplicationController:
+    Pagy::DEFAULT[:items] = 10
+    include Pagy::Backend
+
+ApplicationHelper:
+    include Pagy::Frontend
+
+29. se crea metodo para saber si el admin esta entrando a engines.
+30. se crea seed de type de mantencion y materials
+31. se general relaciones de mantencion a otras tablas.
+  belongs_to :engine
+  belongs_to :type_maintenance
+  belongs_to :material
+  belongs_to :town 
+  belongs_to :user
+32. se genera formulario de creacion de mantenimiento.
+33. se crea las referencias a la tabla maintenence
+    rails generate migration AddEngineToMaintenances engine:references
+    rails generate migration AddTypeMaintenanceToMaintenances type_maintenance:references
+    rails generate migration AddTownToMaintenances town:references
+    rails generate migration AddMaterialToMaintenances material:references
+    rails generate migration AddUserToMaintenances user:references
 

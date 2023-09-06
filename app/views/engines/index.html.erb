@@ -1,0 +1,36 @@
+<h1>Engines</h1>
+
+<div id="engines">
+  <% if notice.present? %>
+    <div class="alert alert-success">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th>Tipo de motor</th>
+        <th>Foto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @engines.each do |engine| %>
+        <tr>
+          <td><%= engine.name %></td>
+          <td><%= engine.descripcion %></td>
+          <td><%= engine.type_engine %></td>
+          <td><%= engine.photo %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <p>
+    <%= link_to "New engine", new_engine_path %>
+  </p>
+</div>
+
+<%= raw pagy_nav(@pagy) %>

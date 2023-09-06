@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Type maintenances</h1>
+
+<div id="type_maintenances">
+  <% @type_maintenances.each do |type_maintenance| %>
+    <%= render type_maintenance %>
+    <p>
+      <%= link_to "Show this type maintenance", type_maintenance %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New type maintenance", new_type_maintenance_path %>

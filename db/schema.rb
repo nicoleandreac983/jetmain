@@ -10,9 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_05_215454) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_06_044315) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "engines", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "type_engine"
+    t.string "name"
+    t.text "descripcion"
+    t.string "photo"
+  end
+
+  create_table "maintenances", force: :cascade do |t|
+    t.string "name_engine"
+    t.string "photo"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "engine_id", null: false
+    t.bigint "material_id", null: false
+    t.bigint "town_id", null: false
+    t.bigint "type_maintenance_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["engine_id"], name: "index_maintenances_on_engine_id"
+    t.index ["material_id"], name: "index_maintenances_on_material_id"
+    t.index ["town_id"], name: "index_maintenances_on_town_id"
+    t.index ["type_maintenance_id"], name: "index_maintenances_on_type_maintenance_id"
+    t.index ["user_id"], name: "index_maintenances_on_user_id"
+  end
+
+  create_table "materials", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "towns", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "type_maintenances", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -22,8 +67,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_05_215454) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "maintenances", "engines"
+  add_foreign_key "maintenances", "materials"
+  add_foreign_key "maintenances", "towns"
+  add_foreign_key "maintenances", "type_maintenances"
+  add_foreign_key "maintenances", "users"
 end

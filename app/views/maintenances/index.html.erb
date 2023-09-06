@@ -1,14 +1,30 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Maintenances</h1>
+<h1>Mantenciones</h1>
 
-<div id="maintenances">
-  <% @maintenances.each do |maintenance| %>
-    <%= render maintenance %>
-    <p>
-      <%= link_to "Show this maintenance", maintenance %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New maintenance", new_maintenance_path %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Tipo de motor</th>
+      <th>Tipo de mantenimiento</th>
+      <th>Nombre del motor</th>
+      <th>Foto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @maintenances.each do |maintenance| %>
+      <tr>
+        <td><%= maintenance.engine.type_engine %></td>
+        <td><%= maintenance.type_maintenance.name %></td>
+        <td><%= maintenance.name_engine %></td>
+        <td><%= maintenance.engine.photo %></td>
+        <td>
+          <%= link_to "Editar", edit_maintenance_path(maintenance) %>
+          <%= link_to "Eliminar", maintenance, method: :delete, data: { confirm: "¿Estás seguro?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= raw pagy_nav(@pagy) %>
+<%= link_to "Nueva Mantención", new_maintenance_path, class: "btn btn-primary" %>

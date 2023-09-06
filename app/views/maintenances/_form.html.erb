@@ -1,32 +1,42 @@
-<%= form_with(model: maintenance) do |form| %>
-  <% if maintenance.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(maintenance.errors.count, "error") %> prohibited this maintenance from being saved:</h2>
+<%= form_with(model: @maintenance, local: true) do |form| %>
+  <!-- Tipo de motor (engine) -->
+  <div class="field">
+    <%= form.label :engine_id, "Tipo de motor" %>
+    <%= form.collection_select :engine_id, Engine.all, :id, :type_engine, prompt: "Selecciona un tipo de motor" %>
+  </div>
 
-      <ul>
-        <% maintenance.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <!-- Tipo de mantenimiento (type_maintenance) -->
+  <div class="field">
+    <%= form.label :type_maintenance_id, "Tipo de mantenimiento" %>
+    <%= form.collection_select :type_maintenance_id, TypeMaintenance.all, :id, :name, prompt: "Selecciona un tipo de mantenimiento" %>
+  </div>
 
-  <div>
-    <%= form.label :name_engine, style: "display: block" %>
+  <!-- Nombre del motor (engine) -->
+  <div class="field">
+    <%= form.label :name_engine, "Nombre del motor" %>
     <%= form.text_field :name_engine %>
   </div>
 
-  <div>
-    <%= form.label :photo, style: "display: block" %>
-    <%= form.text_field :photo %>
+  <!-- Ciudad (town) -->
+  <div class="field">
+    <%= form.label :town_id, "Ciudad" %>
+    <%= form.collection_select :town_id, Town.all, :id, :name, prompt: "Selecciona una ciudad" %>
   </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+  <!-- Material (material) -->
+  <div class="field">
+    <%= form.label :material_id, "Material" %>
+    <%= form.collection_select :material_id, Material.all, :id, :name, prompt: "Selecciona un material" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <!-- Email del usuario autenticado -->
+  <div class="field">
+    <%= form.label :email, "Email del usuario" %>
+    <%= form.text_field :email, value: current_user.email, disabled: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Crear Maintenance" %>
   </div>
 <% end %>
+
