@@ -51,7 +51,7 @@ def authorize_request(kind = nil)
  redirect_to posts_path, notice: "You are not authorized to perform this action"
  end
 end
-tambien en #app/controllers/posts_controller.rb
+tambien en #app/controllers/maintenance_controller.rb y engine controller
 before_action only: [:new, :create] do
  authorize_request(["author", "admin"])
 end
@@ -115,4 +115,14 @@ ApplicationHelper:
     rails generate migration AddTownToMaintenances town:references
     rails generate migration AddMaterialToMaintenances material:references
     rails generate migration AddUserToMaintenances user:references
+34. se modifican vistas de formularios,new, vista index.
+35. se rellena inicio y terminos y condiciones.
+36. crea relacion user con maintenance
+37. se agrega paginacion a maintenance.
+38. se crea un seed con 100 mantenimientos.
+39.  Home y Login
+    Crea una ruta en config/routes.rb para la página de inicio:
+    devise_scope :user do
+        root to: 'devise/sessions#new'
+    end
 

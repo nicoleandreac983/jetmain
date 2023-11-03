@@ -1,6 +1,11 @@
 class EnginesController < ApplicationController
-  before_action :authenticate_admin
-  before_action :set_engine, only: %i[show edit update destroy]
+  before_action :authenticate_user!
+  before_action only: [:new, :create] do
+    authorize_request(["operator", "admin"])
+  end
+  before_action only: %i[ show edit update destroy ] do
+    authorize_request(["admin"])
+  end
   # GET /engines or /engines.json
   def index
     @engines = Engine.all
@@ -11,6 +16,7 @@ class EnginesController < ApplicationController
 
   # GET /engines/1 or /engines/1.json
   def show
+    @engine = Engine.find(params[:id])
   end
 
   # GET /engines/new
@@ -52,11 +58,17 @@ class EnginesController < ApplicationController
 
   # DELETE /engines/1 or /engines/1.json
   def destroy
-    @engine.destroy
+    @engine = Engine.find(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to engines_url, notice: "Engine was successfully destroyed." }
-      format.json { head :no_content }
+    if @engine.destroy
+      respond_to do |format|
+        format.html { redirect_to engines_url, notice: "Engine was successfully destroyed." }
+      end
+    else
+      # Manejar el caso en el que el mantenimiento no pudo ser eliminado
+      respond_to do |format|
+        format.html { redirect_to engines_url, alert: "Unable to destroy engines." }
+      end
     end
   end
 

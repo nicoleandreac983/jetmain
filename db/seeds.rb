@@ -93,3 +93,30 @@ material_dos = Material.create(
 material_tres = Material.create!(
     name: "Sistemas de combustible"
 )
+
+#mantenimientos
+50.times do |e|
+    Maintenance.create(
+        name_engine: "REAC-#{e + 1}",
+        photo: Faker::LoremFlickr.image(size: "100x100"),
+        email: "operador#{e + 1}@mail.com",
+        engine: Engine.all.sample,
+        material: Material.all.sample,
+        town: Town.all.sample,
+        type_maintenance: TypeMaintenance.all.sample,
+        user: User.all.sample
+    )
+end
+
+50.times do |c|
+    Maintenance.create(
+        name_engine: "TURBO-#{c + 1}",
+        photo: Faker::LoremFlickr.image(size: "100x100"),
+        email: "operador#{c + 1}@mail.com",
+        engine: Engine.all.sample,
+        material: Material.all.sample,
+        town: Town.all.sample,
+        type_maintenance: TypeMaintenance.all.sample,
+        user: User.all.sample
+    )
+end

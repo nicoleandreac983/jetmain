@@ -3,8 +3,8 @@
 <%= render @maintenance %>
 
 <div>
-  <%= link_to "Edit this maintenance", edit_maintenance_path(@maintenance) %> |
-  <%= link_to "Back to maintenances", maintenances_path %>
+  <%= link_to "Editare", edit_maintenance_path(@maintenance) %> |
+  <%= link_to "Volver", maintenances_path %>
 
-  <%= button_to "Destroy this maintenance", @maintenance, method: :delete %>
+  <%= button_to "Eliminar mantenimiento", @maintenance, method: :delete %>
 </div>

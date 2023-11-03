@@ -3,10 +3,10 @@
 <%= render @engine %>
 
 <div>
-  <%= link_to "Edit this engine", edit_engine_path(@engine) %> |
-  <%= link_to "Back to engines", engines_path %>
+  <%= link_to "Edit", edit_engine_path(@engine), class:"btn btn-warning" %> |
+  <%= link_to "Volver", engines_path, class:"btn btn-success" %>
 
-  <%= button_to "Destroy this engine", @engine, method: :delete %>
+  <%= button_to "Eliminar", @engine, method: :delete, class:"btn btn-danger" %>
 </div>
 
 

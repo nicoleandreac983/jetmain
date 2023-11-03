@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :maintenances
   resources :engines
   get 'pages/inicio', to: 'pages#inicio', as: 'pages_inicio'
+  resources :maintenances, only: [:show]
 
   devise_for :users
 
@@ -12,7 +13,9 @@ Rails.application.routes.draw do
   end
   
   # Define la ruta de inicio predeterminada para los no autenticados (inicio de sesión)
-  root to: 'devise/sessions#new'
+  devise_scope :user do
+    root to: 'devise/sessions#new'
+  end
 end
 
 

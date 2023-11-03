@@ -1,6 +1,11 @@
 class MaintenancesController < ApplicationController
   before_action :authenticate_user!
-
+  before_action only: [:new, :create] do
+    authorize_request(["operator", "admin"])
+  end
+  before_action only: %i[ show edit update destroy ] do
+    authorize_request(["admin"])
+  end
 # Define un método para autorizar al usuario
 def authorize_user
   # Verifica el rol del usuario y autoriza en consecuencia
@@ -38,6 +43,7 @@ before_action :authorize_user, only: [:create, :new]
 
   # GET /maintenances/1/edit
   def edit
+    @maintenance = Maintenance.find(params[:id])
   end
 
   # POST /maintenances or /maintenances.json
@@ -86,11 +92,17 @@ before_action :authorize_user, only: [:create, :new]
 
   # DELETE /maintenances/1 or /maintenances/1.json
   def destroy
-    @maintenance.destroy
+    @maintenance = Maintenance.find(params[:id]) # Encuentra el mantenimiento por su ID
 
-    respond_to do |format|
-      format.html { redirect_to maintenances_url, notice: "Maintenance was successfully destroyed." }
-      format.json { head :no_content }
+    if @maintenance.destroy
+      respond_to do |format|
+        format.html { redirect_to maintenances_url, notice: "Maintenance was successfully destroyed." }
+      end
+    else
+      # Manejar el caso en el que el mantenimiento no pudo ser eliminado
+      respond_to do |format|
+        format.html { redirect_to maintenances_url, alert: "Unable to destroy maintenance." }
+      end
     end
   end
 
