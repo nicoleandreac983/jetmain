@@ -4,8 +4,8 @@
 2. Crear Proyecto rails con :
 	rails new examen_nicolecampos -d postgresql
 3. Configurar DB. archivo database.yml 
-   username: userdb
-   password: ror2023
+   username: ******
+   password: *****
    host: localhost
    port: 5432
 4. Probar conexion DB:
